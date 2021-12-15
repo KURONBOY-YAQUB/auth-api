@@ -3,7 +3,7 @@ const Audio = db.audio;
 
 exports.audio_upload = (req, res) => {
   const audio = new Audio({
-    name: req.body.name,
+    name: req.file.path,
   });
 
   // if (err) {

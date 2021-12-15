@@ -10,5 +10,5 @@ module.exports = function (app) {
     next();
   });
 
-  app.post("/api/upload/audio", upload.single("name"), controller.audio_upload);
+  app.post("/api/upload/audio", upload.single("file"), controller.audio_upload);
 };
