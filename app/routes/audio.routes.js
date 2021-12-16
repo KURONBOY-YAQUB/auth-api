@@ -11,4 +11,8 @@ module.exports = function (app) {
   });
 
   app.post("/api/upload/audio", upload.single("file"), controller.audio_upload);
+  app.get("/api/get/audio/:id", controller.get_audio);
+  app.post("/api/add/section", controller.add_section);
+  app.get("/api/download/:id", controller.download_audio);
+  app.get("/api/audios/section_1", controller.section_1);
 };

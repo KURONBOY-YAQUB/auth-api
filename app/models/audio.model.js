@@ -4,7 +4,11 @@ const Audio = mongoose.model(
   "Audio",
   mongoose.Schema(
     {
-      name: String,
+      url: String,
+      section: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Section",
+      },
     },
     {
       timestamps: true,
