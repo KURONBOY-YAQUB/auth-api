@@ -14,5 +14,5 @@ module.exports = function (app) {
   app.get("/api/get/audio/:id", controller.get_audio);
   app.post("/api/add/section", controller.add_section);
   app.get("/api/download/:id", controller.download_audio);
-  app.get("/api/audios/section_1", controller.section_1);
+  app.get("/api/audios/section/:id", controller.getAudioInSection);
 };

@@ -5,7 +5,7 @@ const Audio = mongoose.model(
   mongoose.Schema(
     {
       url: String,
-      section: {
+      sectionId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Section",
       },

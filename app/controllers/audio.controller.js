@@ -6,28 +6,8 @@ const fs = require("fs");
 exports.audio_upload = (req, res) => {
   const audio = new Audio({
     url: req.file.path,
+    sectionId: req.body.sectionId,
   });
-
-  // if (err) {
-  //   res.status(400).json({
-  //     result: "failed",
-  //     message: `Cannot upload files. Error is ${err}`,
-  //   });
-  // } else {
-  //   if (req.file === undefined) {
-  //     res.status(400).json({
-  //       result: "failed",
-  //       message: "You are not submit images",
-  //     });
-  //   } else {
-  //     console.log(req.file);
-  //     res.status(200).json({
-  //       result: "ok",
-  //       message: "Upload image successfully",
-  //       path: req.file.originalname,
-  //     });
-  //   }
-  // }
 
   audio.save((err, audio) => {
     if (err) {
@@ -41,15 +21,6 @@ exports.audio_upload = (req, res) => {
     }
 
     res.send({ message: "Error uploading" });
-
-    // audio.save((err) => {
-    //   if (err) {
-    //     res.status(500).send({ message: err });
-    //     return;
-    //   }
-
-    //   res.send({ message: "Audio uploaded successfully!" });
-    // });
   });
 };
 
@@ -58,7 +29,7 @@ exports.get_audio = (req, res) => {
   Audio.findOne({
     _id: getAudio,
   })
-    .populate("section", "-__v")
+    .populate("sectionId", "-__v")
     .exec((err, audio) => {
       if (err) {
         return res.status(500).json({ message: err });
@@ -70,7 +41,7 @@ exports.get_audio = (req, res) => {
         return res.status(200).json({
           id: audio._id,
           url: audio.url,
-          section: audio.section.section,
+          section: audio.sectionId.section,
         });
       }
     });
@@ -121,9 +92,12 @@ exports.download_audio = (req, res) => {
 
 // Get on the section
 
-exports.section_1 = (req, res) => {
-  Audio.find()
-    .populate("section", "-__v")
+exports.getAudioInSection = (req, res) => {
+  const getSection = req.params.id;
+  Audio.find({
+    sectionId: getSection,
+  })
+    .populate({ path: "sectionId" })
     .exec((err, audios) => {
       if (err) {
         return res.status(500).json({ message: err });
